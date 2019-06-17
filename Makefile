@@ -1,4 +1,4 @@
-ROMS=square.nes
+ROMS=square.nes square2.nes
 
 .PHONY: all
 all: $(ROMS)
