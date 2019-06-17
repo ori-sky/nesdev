@@ -7,5 +7,8 @@ all: $(ROMS)
 clean:
 	rm -fv $(ROMS)
 
-%.nes: src/%.s
-	cl65 -t nes $^ -o $@
+%.nes: src/%.o
+	ld65 -t nes $^ -o $@
+
+src/%.o: src/%.s
+	ca65 -t nes -I include $^ -o $@
