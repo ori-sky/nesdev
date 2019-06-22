@@ -4,6 +4,23 @@
   channels .byte
 .endstruct
 
+; x = #0 on exit
+apu_init:
+  ldx #%01000000                                                                ; disable APU frame IRQ
+  stx $4017                                                                     ; $4017 = APU: frame counter
+                                                                                ; [0:5] reserved
+                                                                                ; [6:6] IRQ inhibit
+                                                                                ; [7:7] mode
+                                                                                ;       0 = 4-step
+                                                                                ;       1 = 5-step
+  ldx #0
+  stx $4010                                                                     ; $4010 = delta modulation flags
+                                                                                ; [0:3] frequency
+                                                                                ; [4:5] reserved
+                                                                                ; [6:6] loop
+                                                                                ; [7:7] IRQ enable
+  rts
+
 ; x = APU
 ; y = bits 0:7 of timer
 pulse1_play:

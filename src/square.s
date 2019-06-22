@@ -10,7 +10,9 @@ apu: .tag APU
 reset:
   sei                                                                           ; disable IRQs
   cld                                                                           ; disable decimal mode
-
+  ldx #$ff                                                                      ; set up stack pointer
+  txs
+  jsr apu_init
   ldx apu
   ldy #$e3                                                                      ; middle C = 440 Hz = ~2.27ms = 0xe3
   jsr pulse1_play

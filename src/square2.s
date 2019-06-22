@@ -10,7 +10,9 @@ apu: .tag APU
 reset:
   sei                                                                           ; disable IRQs
   cld                                                                           ; disable decimal mode
-
+  ldx #$ff                                                                      ; set up stack pointer
+  txs
+  jsr apu_init
   ldx apu
   ldy #$e3
   jsr pulse1_play

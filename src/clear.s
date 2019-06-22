@@ -1,4 +1,5 @@
 .include "header/ines.inc"
+.include "apu.inc"
 
 .segment "STARTUP"
 
@@ -7,17 +8,11 @@
 reset:
   sei                                                                           ; disable IRQs
   cld                                                                           ; disable decimal mode
-  ldx #%01000000                                                                ; disable APU frame IRQ
-  stx $4017                                                                     ; $4017 = APU: frame counter
-                                                                                ; [0:5] reserved
-                                                                                ; [6:6] IRQ inhibit
-                                                                                ; [7:7] mode
-                                                                                ;       0 = 4-step
-                                                                                ;       1 = 5-step
+
   ldx #$ff                                                                      ; set up stack pointer
   txs
-  inx                                                                           ; set x to 0
-                                                                                ; disable NMI, rendering, and DMC IRQs
+  jsr apu_init                                                                  ; x = 0 on exit so we don't need to set it
+                                                                                ; disable NMIs and rendering
   stx $2000                                                                     ; $2000 = PPUCTRL
                                                                                 ; [0:1] nametable select
                                                                                 ; [2:2] increment mode
@@ -35,11 +30,6 @@ reset:
                                                                                 ; [5:5] emphasize red
                                                                                 ; [6:6] emphasize green
                                                                                 ; [7:7] emphasize blue
-  stx $4010                                                                     ; $4010 = delta modulation flags
-                                                                                ; [0:3] frequency
-                                                                                ; [4:5] reserved
-                                                                                ; [6:6] loop
-                                                                                ; [7:7] IRQ enable
 vblank1:
   bit $2002                                                                     ; $2002 = PPUSTATUS
                                                                                 ; [0:4] reserved
