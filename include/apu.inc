@@ -4,8 +4,7 @@
   channels .byte
 .endstruct
 
-; x = #0 on exit
-apu_init:
+.macro APU_INIT
   ldx #%01000000                                                                ; disable APU frame IRQ
   stx $4017                                                                     ; $4017 = APU: frame counter
                                                                                 ; [0:5] reserved
@@ -13,17 +12,17 @@ apu_init:
                                                                                 ; [7:7] mode
                                                                                 ;       0 = 4-step
                                                                                 ;       1 = 5-step
-  ldx #0
+  ldx #$0
   stx $4010                                                                     ; $4010 = delta modulation flags
                                                                                 ; [0:3] frequency
                                                                                 ; [4:5] reserved
                                                                                 ; [6:6] loop
                                                                                 ; [7:7] IRQ enable
-  rts
+.endmacro
 
 ; x = APU
 ; y = bits 0:7 of timer
-pulse1_play:
+apu_pulse1_play:
   lda APU::channels, x
   ora #%00000001                                                                ; enable pulse channel 1
   sta APU::channels, x
@@ -50,7 +49,7 @@ pulse1_play:
 
 ; x = APU
 ; y = bits 0:7 of timer
-pulse2_play:
+apu_pulse2_play:
   lda APU::channels, x
   ora #%00000010                                                                ; enable pulse channel 2
   sta APU::channels, x

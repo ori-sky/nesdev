@@ -12,12 +12,13 @@ reset:
   cld                                                                           ; disable decimal mode
   ldx #$ff                                                                      ; set up stack pointer
   txs
-  jsr apu_init
+  APU_INIT
   ldx apu
   ldy #$e3                                                                      ; middle C = 440 Hz = ~2.27ms = 0xe3
-  jsr pulse1_play
-hang:
-  jmp hang
+  jsr apu_pulse1_play
+@hang:
+  jmp @hang
+
 nmi:
   rti                                                                           ; return from interrupt
 

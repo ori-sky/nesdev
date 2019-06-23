@@ -12,14 +12,15 @@ reset:
   cld                                                                           ; disable decimal mode
   ldx #$ff                                                                      ; set up stack pointer
   txs
-  jsr apu_init
+  APU_INIT
   ldx apu
   ldy #$e3
-  jsr pulse1_play
+  jsr apu_pulse1_play
   ldy #$b3
-  jsr pulse2_play
-hang:
-  jmp hang
+  jsr apu_pulse2_play
+@hang:
+  jmp @hang
+
 nmi:
   rti                                                                           ; return from interrupt
 
