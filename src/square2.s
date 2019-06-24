@@ -1,4 +1,5 @@
 .include "header/ines.inc"
+.include "memory.inc"
 .include "apu.inc"
 
 .segment "STARTUP"
@@ -12,8 +13,7 @@ apu: .tag APU
 reset:
   sei                                                                           ; disable IRQs
   cld                                                                           ; disable decimal mode
-  ldx #$ff                                                                      ; set up stack pointer
-  txs
+  MEMORY_STACK_SET #$ff
   APU_INIT
   ldx apu
   ldy #$e3

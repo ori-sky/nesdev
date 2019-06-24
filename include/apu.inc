@@ -1,3 +1,6 @@
+.ifndef APU_INC
+APU_INC = 1
+
 .segment "CODE"
 
 .struct APU
@@ -66,3 +69,5 @@ apu_pulse2_play:
                                                                                 ; [5:5] length counter halt
                                                                                 ; [6:7] duty cycle
   rts
+
+.endif

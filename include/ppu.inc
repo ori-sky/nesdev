@@ -1,3 +1,6 @@
+.ifndef PPU_INC
+PPU_INC = 1
+
 .include "memory.inc"
 
 .segment "CODE"
@@ -76,3 +79,5 @@ loop:
   cpy #$1                                                                      ; loop over palette RAM ($3f00:$3f20)
   bne loop
 .endmacro
+
+.endif

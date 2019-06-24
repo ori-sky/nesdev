@@ -1,3 +1,6 @@
+.ifndef HEADER_INES_INC
+HEADER_INES_INC = 1
+
 .segment "HEADER"
 
 header:
@@ -24,3 +27,5 @@ header:
                                                                                 ;       1 = PAL
   .byte $0                                                                      ; reserved
   .byte $0, $0, $0, $0, $0                                                      ; unused
+
+.endif

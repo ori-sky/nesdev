@@ -1,4 +1,5 @@
 .include "header/ines.inc"
+.include "memory.inc"
 .include "apu.inc"
 .include "ppu.inc"
 
@@ -13,8 +14,7 @@ palette: .tag PPUPalette
 reset:
   sei                                                                           ; disable IRQs
   cld                                                                           ; disable decimal mode
-  ldx #$ff                                                                      ; set up stack pointer
-  txs
+  MEMORY_STACK_SET #$ff
   APU_INIT
   PPU_INIT
   lda #$17                                                                      ; orange

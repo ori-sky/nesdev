@@ -1,6 +1,14 @@
+.ifndef MEMORY_INC
+MEMORY_INC = 1
+
 .segment "CODE"
 
 MEMORY_ZEROPAGE_PALETTE = $10
+
+.macro MEMORY_STACK_SET sp
+  ldx sp                                                                        ; set up stack pointer
+  txs
+.endmacro
 
 .macro MEMORY_CLEAR
 .local loop
@@ -26,3 +34,5 @@ loop:
   lda #>addr
   sta zeropage+1
 .endmacro
+
+.endif
