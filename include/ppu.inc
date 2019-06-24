@@ -2,31 +2,7 @@
 PPU_INC = 1
 
 .include "memory.inc"
-
-.struct PPUPaletteEntry
-  color1 .byte
-  color2 .byte
-  color3 .byte
-.endstruct
-
-.struct PPUPalette
-  bg  .byte
-  bg0 .tag PPUPaletteEntry
-  .byte
-  bg1 .tag PPUPaletteEntry
-  .byte
-  bg2 .tag PPUPaletteEntry
-  .byte
-  bg3 .tag PPUPaletteEntry
-  .byte
-  fg0 .tag PPUPaletteEntry
-  .byte
-  fg1 .tag PPUPaletteEntry
-  .byte
-  fg2 .tag PPUPaletteEntry
-  .byte
-  fg3 .tag PPUPaletteEntry
-.endstruct
+.include "ppu/palette.inc"
 
 .segment "CODE"
 

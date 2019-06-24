@@ -7,7 +7,7 @@
 
 .segment "DATA"
 
-palette: .tag PPUPalette
+palette: .tag Palette
 
 .segment "CODE"
 
@@ -18,8 +18,8 @@ reset:
   APU_INIT
   PPU_INIT
   MEMORY_STORE_ADDR palette, MEMORY_ZEROPAGE_PALETTE
-  lda #$17                                                                      ; orange
-  sta palette+PPUPalette::bg
+  lda #PALETTE_ORANGE                                                           ; orange
+  sta palette+Palette::bg
   PPU_PALETTE_CLEAR
   ;lda #%10100000                                                                ; emphasize red and blue
   ;sta $2001
