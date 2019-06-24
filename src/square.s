@@ -3,9 +3,11 @@
 
 .segment "STARTUP"
 
-.segment "CODE"
+.segment "DATA"
 
 apu: .tag APU
+
+.segment "CODE"
 
 reset:
   sei                                                                           ; disable IRQs

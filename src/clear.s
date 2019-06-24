@@ -4,6 +4,10 @@
 
 .segment "STARTUP"
 
+.segment "DATA"
+
+palette: .tag PPUPalette
+
 .segment "CODE"
 
 reset:
@@ -13,8 +17,12 @@ reset:
   txs
   APU_INIT
   PPU_INIT
-  lda #%10100000                                                                ; emphasize red and blue
-  sta $2001
+  lda #$17                                                                      ; orange
+  sta palette+PPUPalette::bg
+  MEMORY_ZEROPAGE_STORE palette, MEMORY_ZEROPAGE_PALETTE
+  PPU_PALETTE_CLEAR
+  ;lda #%10100000                                                                ; emphasize red and blue
+  ;sta $2001
 @hang:
   jmp @hang
 
