@@ -3,8 +3,6 @@ PPU_INC = 1
 
 .include "memory.inc"
 
-.segment "CODE"
-
 .struct PPUPaletteEntry
   color1 .byte
   color2 .byte
@@ -29,6 +27,8 @@ PPU_INC = 1
   .byte
   fg3 .tag PPUPaletteEntry
 .endstruct
+
+.segment "CODE"
 
 .macro PPU_INIT
   ldx #$0                                                                       ; disable NMIs and rendering

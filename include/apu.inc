@@ -1,11 +1,13 @@
 .ifndef APU_INC
 APU_INC = 1
 
-.segment "CODE"
+.include "memory.inc"
 
 .struct APU
   channels .byte
 .endstruct
+
+.segment "CODE"
 
 .macro APU_INIT
   ldx #%01000000                                                                ; disable APU frame IRQ
@@ -23,12 +25,12 @@ APU_INC = 1
                                                                                 ; [7:7] IRQ enable
 .endmacro
 
-; x = APU
-; y = bits 0:7 of timer
+; x = bits 0:7 of timer
 apu_pulse1_play:
-  lda APU::channels, x
+  ldy #APU::channels
+  lda (MEMORY_ZEROPAGE_APU), y
   ora #%00000001                                                                ; enable pulse channel 1
-  sta APU::channels, x
+  sta (MEMORY_ZEROPAGE_APU), y
   sta $4015                                                                     ; $4015 = APU: status
                                                                                 ; [0:0] enable pulse channel 1
                                                                                 ; [1:1] enable pulse channel 2
@@ -36,7 +38,7 @@ apu_pulse1_play:
                                                                                 ; [3:3] enable noise channel
                                                                                 ; [4:4] enable delta modulation channel
                                                                                 ; [5:7] reserved
-  sty $4002                                                                     ; $4002 = APU: bits 0:7 of pulse 1 timer
+  stx $4002                                                                     ; $4002 = APU: bits 0:7 of pulse 1 timer
   lda #$0                                                                       ; set high bits of timer
   sta $4003                                                                     ; $4003 = APU: length counter load and bits 8:10 of pulse 1 timer
                                                                                 ; [0:2] bits 8:10 of timer
@@ -50,14 +52,14 @@ apu_pulse1_play:
   rts
 
 
-; x = APU
-; y = bits 0:7 of timer
+; x = bits 0:7 of timer
 apu_pulse2_play:
-  lda APU::channels, x
+  ldy #APU::channels
+  lda (MEMORY_ZEROPAGE_APU), y
   ora #%00000010                                                                ; enable pulse channel 2
-  sta APU::channels, x
+  sta (MEMORY_ZEROPAGE_APU), y
   sta $4015
-  sty $4006                                                                     ; $4002 = APU: bits 0:7 of pulse 2 timer
+  stx $4006                                                                     ; $4002 = APU: bits 0:7 of pulse 2 timer
   lda #$0                                                                       ; set high bits of timer
   sta $4007                                                                     ; $4003 = APU: length counter load and bits 8:10 of pulse 2 timer
                                                                                 ; [0:2] bits 8:10 of timer

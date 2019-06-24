@@ -15,10 +15,10 @@ reset:
   cld                                                                           ; disable decimal mode
   MEMORY_STACK_SET #$ff
   APU_INIT
-  ldx apu
-  ldy #$e3
+  MEMORY_STORE_ADDR apu, MEMORY_ZEROPAGE_APU
+  ldx #$e3
   jsr apu_pulse1_play
-  ldy #$b3
+  ldx #$b3
   jsr apu_pulse2_play
 @hang:
   jmp @hang

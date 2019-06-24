@@ -1,9 +1,10 @@
 .ifndef MEMORY_INC
 MEMORY_INC = 1
 
-.segment "CODE"
+MEMORY_ZEROPAGE_APU     = $10
+MEMORY_ZEROPAGE_PALETTE = $12
 
-MEMORY_ZEROPAGE_PALETTE = $10
+.segment "CODE"
 
 .macro MEMORY_STACK_SET sp
   ldx sp                                                                        ; set up stack pointer
@@ -28,11 +29,11 @@ loop:
   bne loop
 .endmacro
 
-.macro MEMORY_ZEROPAGE_STORE addr, zeropage
+.macro MEMORY_STORE_ADDR addr, dst
   lda #<addr
-  sta zeropage
+  sta dst
   lda #>addr
-  sta zeropage+1
+  sta dst+1
 .endmacro
 
 .endif
