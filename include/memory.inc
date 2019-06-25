@@ -29,10 +29,10 @@ loop:
   bne loop
 .endmacro
 
-.macro MEMORY_STORE_ADDR addr, dst
-  lda #<addr
+.macro MEMORY_STORE_WORD word, dst
+  lda #<word
   sta dst
-  lda #>addr
+  lda #>word
   sta dst+1
 .endmacro
 

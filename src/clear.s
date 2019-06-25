@@ -17,7 +17,7 @@ reset:
   MEMORY_STACK_SET #$ff
   APU_INIT
   PPU_INIT
-  MEMORY_STORE_ADDR palette, MEMORY_ZEROPAGE_PALETTE
+  MEMORY_STORE_WORD palette, MEMORY_ZEROPAGE_PALETTE
   lda #PALETTE_ORANGE                                                           ; orange
   sta palette+Palette::bg
   PPU_PALETTE_CLEAR

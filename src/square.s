@@ -15,7 +15,7 @@ reset:
   cld                                                                           ; disable decimal mode
   MEMORY_STACK_SET #$ff
   APU_INIT
-  MEMORY_STORE_ADDR apu, MEMORY_ZEROPAGE_APU
+  MEMORY_STORE_WORD apu, MEMORY_ZEROPAGE_APU
   ldx #$e3                                                                      ; middle C = 440 Hz = ~2.27ms = 0xe3
   jsr apu_pulse1_play
 @hang:
