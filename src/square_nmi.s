@@ -7,7 +7,9 @@
 
 .segment "DATA"
 
+apu:     .tag APU
 palette: .tag Palette
+note:    .byte $e3
 
 .segment "CODE"
 
@@ -17,16 +19,20 @@ reset:
   MEMORY_STACK_SET #$ff
   APU_INIT
   PPU_INIT
+  MEMORY_STORE_WORD apu, MEMORY_ZEROPAGE_APU
   MEMORY_STORE_WORD palette, MEMORY_ZEROPAGE_PALETTE
   lda #PALETTE_ORANGE
   sta palette+Palette::bg
   PPU_PALETTE_CLEAR
-  ;lda #%10100000                                                                ; emphasize red and blue
-  ;sta $2001
+  PPU_NMI_ENABLE
 @hang:
   jmp @hang
 
 nmi:
+  ldx note
+  dex
+  stx note
+  jsr apu_pulse1_play
   rti                                                                           ; return from interrupt
 
 .segment "VECTORS"

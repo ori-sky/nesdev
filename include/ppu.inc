@@ -30,6 +30,11 @@ PPU_INC = 1
   PPU_VBLANK_WAIT
 .endmacro
 
+.macro PPU_NMI_ENABLE
+  lda #%10000000
+  sta $2000
+.endmacro
+
 .macro PPU_VBLANK_WAIT
 .local loop
 loop:

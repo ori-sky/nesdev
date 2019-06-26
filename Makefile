@@ -1,4 +1,4 @@
-ROMS=square.nes square2.nes clear.nes
+ROMS=square.nes square2.nes clear.nes square_nmi.nes
 
 .PHONY: all
 all: $(ROMS)
