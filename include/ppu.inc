@@ -10,12 +10,24 @@ PPU_INC = 1
   ldx #$0                                                                       ; disable NMIs and rendering
   stx $2000                                                                     ; $2000 = PPUCTRL
                                                                                 ; [0:1] nametable select
-                                                                                ; [2:2] increment mode
-                                                                                ; [3:3] sprite tile select
-                                                                                ; [4:4] background tile select
-                                                                                ; [5:5] sprite height
+                                                                                ;       0 = $2000
+                                                                                ;       1 = $2400
+                                                                                ;       2 = $2800
+                                                                                ;       3 = $2c00
+                                                                                ; [2:2] VRAM increment per PPUDATA read/write
+                                                                                ;       0 = increment by  1 (horizontal)
+                                                                                ;       1 = increment by 32 (vertical)
+                                                                                ; [3:3] sprite pattern table select
+                                                                                ;       0 = $0000
+                                                                                ;       1 = $1000
+                                                                                ; [4:4] background pattern table select
+                                                                                ;       0 = $0000
+                                                                                ;       1 = $1000
+                                                                                ; [5:5] sprite size
+                                                                                ;       0 = 8 x  8
+                                                                                ;       1 = 8 x 16
                                                                                 ; [6:6] PPU master/slave
-                                                                                ; [7:7] NMI enable
+                                                                                ; [7:7] enable NMIs
   stx $2001                                                                     ; $2001 = PPUMASK
                                                                                 ; [0:0] greyscale
                                                                                 ; [1:1] background left column enable
@@ -57,7 +69,7 @@ loop:
   lda (MEMORY_ZEROPAGE_PALETTE), y
   sta $2007                                                                     ; $2007 = PPUDATA
   iny
-  cpy #$1                                                                      ; loop over palette RAM ($3f00:$3f20)
+  cpy #$1                                                                       ; loop over palette RAM ($3f00:$3f20)
   bne loop
 .endmacro
 
